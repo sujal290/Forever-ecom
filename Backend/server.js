@@ -32,6 +32,19 @@ app.use('/api/order',orderRouter)
 app.get('/', (req, res) => {
     res.send("API working")
 })
-// app.listen(port, ()=> console.log('Server started on port: ' + port));
+// // app.listen(port, ()=> console.log('Server started on port: ' + port));
 
-export default app;
+// export default app;
+
+
+
+// 👇 Export as Vercel-compatible handler
+import { createServer } from 'http';
+import { parse } from 'url';
+
+const server = createServer((req, res) => {
+    const parsedUrl = parse(req.url, true);
+    app(req, res, parsedUrl);  // let Express handle the request
+});
+
+export default server;
